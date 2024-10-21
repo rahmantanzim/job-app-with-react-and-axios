@@ -38,6 +38,7 @@ const useFetchJobs = (params,page) => {
         axios.get(BASE_URL,{cancelToken:cancelToken.token})
         .then((response)=>{
             dispatch({type: ACTION.GET_DATA , payload: {jobs: response.data}})
+            console.log(response.data)
         })
         .catch((err)=>{
             if(axios.isCancel(err)){

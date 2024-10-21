@@ -1,6 +1,6 @@
 # An App that fetch job listings
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was learned from the youtube channel named 'Web Dev Simplified'  
 
 ## Tools 
 

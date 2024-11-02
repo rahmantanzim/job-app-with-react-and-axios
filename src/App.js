@@ -5,6 +5,8 @@ import Job from "./Job";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import JobsPagination from "./JobsPagination";
+import SearchForm from './SearchForm';
+
 function App() {
   const [params, setParams] = useState({});
   const [page, setPage] = useState(3);
@@ -21,11 +23,15 @@ function App() {
     
       setHasnextPage(page <=totalPages)
     
-  },[page,totalPages])
+  },[page,totalPages]);
+  
   return (
     <>
       {loading && <h1>Loading...</h1>}
       {error && <h1>ERROR!</h1>}
+      <Container>
+        <SearchForm/>
+      </Container>
       <Container>
         <h1 className="my-5">{jobs.length} jobs available</h1>
         <JobsPagination page={page} setPage={setPage} hasNextPage={hasNextPage} />

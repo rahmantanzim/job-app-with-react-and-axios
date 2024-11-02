@@ -20,17 +20,22 @@ function App() {
   const totalPages = Math.floor(totalJobs/maxItemsPerPage);
 
   useEffect(()=>{
-    
       setHasnextPage(page <=totalPages)
-    
   },[page,totalPages]);
-  
+  const handleParamChange = (e)=>{
+    const param = e.target.name;
+    const val = e.target.value;
+    setPage(1);
+    setParams((prevParam)=>{
+      return {...prevParam, [param]:val}
+    })
+  }
   return (
     <>
       {loading && <h1>Loading...</h1>}
       {error && <h1>ERROR!</h1>}
       <Container>
-        <SearchForm/>
+        <SearchForm params={params} onParamChange={handleParamChange}/>
       </Container>
       <Container>
         <h1 className="my-5">{jobs.length} jobs available</h1>

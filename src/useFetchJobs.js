@@ -35,7 +35,15 @@ const useFetchJobs = (params,page) => {
     useEffect(()=>{
         const cancelToken = axios.CancelToken.source();
         dispatch({type:ACTION.MAKE_REQUEST});
-        axios.get(BASE_URL,{cancelToken:cancelToken.token})
+        axios.get(BASE_URL,
+            {
+                cancelToken:cancelToken.token,
+                params:{
+                    title:params.title,
+                    location:params.location,
+                    full_time:params.full_time
+                }
+            })
         .then((response)=>{
             dispatch({type: ACTION.GET_DATA , payload: {jobs: response.data}})
             console.log(response.data)

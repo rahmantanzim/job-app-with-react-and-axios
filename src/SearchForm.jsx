@@ -16,18 +16,20 @@ const SearchForm = ({ params, onParamChange }) => {
   return (
     <Form className="my-5" style={formStyle }>
       <Row className="align-items-center">
-        <Col xs={5}>
-          <Form.Control name="title" onChange={onParamChange}  placeholder="Job title" style={inputStyle} />
+        <Col xs={4}>
+          <Form.Control type="text" name="title" onChange={onParamChange} value={params.title} placeholder="Job title" style={inputStyle} />
+        </Col >
+        <Col xs={4}>
+          <Form.Control type="text" name="location" onChange={onParamChange} value={params.city} placeholder="Location/city" style={inputStyle} />
         </Col>
-        <Col>
-          <Form.Control name="location" onChange={onParamChange} placeholder="Location/city" style={inputStyle} />
-        </Col>
-        <Col>
+        <Col xs={2}>
           <Form.Check
             type="checkbox"
             label="Full time only"
             name="full_time"
-            onChange={onParamChange}
+            onChange={(e) => onParamChange({ target: { name: 'full_time', value: e.target.checked } })}
+            checked={params.full_time || false}
+            value={params.full_time}
           />
         </Col>
         <Col>

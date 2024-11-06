@@ -38,10 +38,9 @@ const useFetchJobs = (params,page) => {
         axios.get(BASE_URL,
             {
                 cancelToken:cancelToken.token,
-                params:{
-                    title:params.title,
-                    location:params.location,
-                    full_time:params.full_time
+                params: {
+                    ...params,  // Pass search parameters dynamically
+                    page        // Include page for pagination
                 }
             })
         .then((response)=>{

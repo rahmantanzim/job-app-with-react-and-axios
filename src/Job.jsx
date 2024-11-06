@@ -8,12 +8,12 @@ import rehypeRaw from 'rehype-raw';
 const Job = ({ job }) => {
     const [open,setOpen] = useState(false);
   const dateStr = job.date;
-  const date = new Date(dateStr);
-  const formattedDate = new Intl.DateTimeFormat("en-GB", {
-    day: "2-digit",
-    month: "long",
-    year: "numeric",
-  }).format(date);
+  // const date = new Date(dateStr);
+  // const formattedDate = new Intl.DateTimeFormat("en-GB", {
+  //   day: "2-digit",
+  //   month: "long",
+  //   year: "numeric",
+  // }).format(date);
   return (
     <Col md={6}>
       <Card className="text-left m-3">

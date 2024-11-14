@@ -9,6 +9,8 @@ import SearchForm from './SearchForm';
 
 function App() {
   const [params, setParams] = useState({ title: '', location: '', full_time: false });
+  const [searchedTitle,setSearchedTitle] = useState();
+  const [searchedLocation,setSearchedLocation] = useState();
   const [page, setPage] = useState(1);
   const { jobs, loading, error } = useFetchJobs(params, page);
 

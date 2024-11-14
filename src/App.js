@@ -5,34 +5,46 @@ import Job from "./Job";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import JobsPagination from "./JobsPagination";
-import SearchForm from './SearchForm';
+import SearchForm from "./SearchForm";
 
 function App() {
-  const [params, setParams] = useState({ title: '', location: '', full_time: false });
-  const [searchedTitle,setSearchedTitle] = useState();
-  const [searchedLocation,setSearchedLocation] = useState();
+  const [params, setParams] = useState({
+    title: "",
+    location: "",
+    full_time: false,
+  });
+  const [filteredjobs, setFilteredjobs] = useState([]);
+  const [searchedTitle, setSearchedTitle] = useState();
+  const [searchedLocation, setSearchedLocation] = useState();
   const [page, setPage] = useState(1);
   const { jobs, loading, error } = useFetchJobs(params, page);
 
-  const maxItemsPerPage = 10;  // Number of jobs to show per page
+  const maxItemsPerPage = 10; // Number of jobs to show per page
   const totalJobs = jobs.length;
   const totalPages = Math.ceil(totalJobs / maxItemsPerPage);
 
-  // Get jobs for the current page
-  const currentPageJobs = jobs.slice((page - 1) * maxItemsPerPage, page * maxItemsPerPage);
-
   const handleParamChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    const updatedValue = type === 'checkbox' ? checked : value;
-
-    setParams(prevParams => ({ ...prevParams, [name]: updatedValue }));
-    setPage(1);  // Reset to the first page on new search
+    const searchResult = jobs.filter((job) => {
+      job.title.toLowerCase().includes(searchedTitle.toLowerCase) &&
+        job.location.toLowerCase().includes(searchedLocation.toLowerCase);
+    });
+    setFilteredjobs(searchResult);
+    setPage(1); // Reset to the first page on new search
   };
-
+  // Get jobs for the current page
+  const currentPageJobs = (filteredjobs.length > 0 ?filteredjobs : jobs).slice(
+    (page - 1) * maxItemsPerPage,
+    page * maxItemsPerPage
+  );
   return (
     <Container>
       {/* Search Form */}
-      <SearchForm params={params} onParamChange={handleParamChange} />
+      <SearchForm
+        params={params}
+        searchedTitle={searchedTitle}
+        searchedLocation={searchedLocation}
+        onParamChange={handleParamChange}
+      />
 
       {/* Loading and Error Messages */}
       {loading && <h1>Loading...</h1>}
@@ -42,13 +54,21 @@ function App() {
       {!loading && !error && (
         <>
           <h2 className="my-4">{totalJobs} Jobs Found</h2>
-          <JobsPagination page={page} setPage={setPage} hasNextPage={page < totalPages} />
+          <JobsPagination
+            page={page}
+            setPage={setPage}
+            hasNextPage={page < totalPages}
+          />
           <Row>
-            {currentPageJobs.map(job => (
+            {currentPageJobs.map((job) => (
               <Job key={job.id} job={job} />
             ))}
           </Row>
-          <JobsPagination page={page} setPage={setPage} hasNextPage={page < totalPages} />
+          <JobsPagination
+            page={page}
+            setPage={setPage}
+            hasNextPage={page < totalPages}
+          />
         </>
       )}
     </Container>
@@ -81,7 +101,7 @@ export default App;
 //   useEffect(()=>{
 //       setHasnextPage(page <=totalPages)
 //   },[page,totalPages]);
-  
+
 //   const handleParamChange = (e)=>{
 //     const param = e.target.name;
 //     const val = e.target.value;
@@ -102,7 +122,7 @@ export default App;
 //         <JobsPagination page={page} setPage={setPage} hasNextPage={hasNextPage} />
 //         <Row>
 //           {currentPageJobs.map((job, index) => {
-//             return <Job key={job.id} job={job} />;  
+//             return <Job key={job.id} job={job} />;
 //           })}
 //         </Row>
 //         <JobsPagination page={page} setPage={setPage} hasNextPage={hasNextPage} />

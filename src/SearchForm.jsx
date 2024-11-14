@@ -12,15 +12,15 @@ const formStyle = {
     padding: '30px',
     boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px'
 }
-const SearchForm = ({ params, onParamChange }) => {
+const SearchForm = ({ params, onParamChange,searchedLocation, searchedTitle }) => {
   return (
     <Form className="my-5" style={formStyle }>
       <Row className="align-items-center">
         <Col xs={4}>
-          <Form.Control type="text" name="title" onChange={onParamChange} value={params.title} placeholder="Job title" style={inputStyle} />
+          <Form.Control type="text" name="title" onChange={onParamChange} value={searchedTitle} placeholder="Job title" style={inputStyle} />
         </Col >
         <Col xs={4}>
-          <Form.Control type="text" name="location" onChange={onParamChange} value={params.city} placeholder="Location/city" style={inputStyle} />
+          <Form.Control type="text" name="location" onChange={onParamChange} value={searchedLocation} placeholder="Location/city" style={inputStyle} />
         </Col>
         <Col xs={2}>
           <Form.Check
